@@ -1,0 +1,31 @@
+@import 'bulma/bulma.sass'
+@import 'bulma-checkbox/bulma-checkbox'
+@import '@cityssm/bulma-sticky-table/sticky-table'
+@import "animate.css"
+
+.box
+  padding: 0.75rem !important
+
+.button.is-floating
+  position: fixed
+  min-width: 120px
+  height: 60px
+  bottom: 40px
+  right: 40px
+  border-radius: 100px
+  box-shadow: 0 .0625em .125em rgba($scheme-invert,.05)
+  z-index: 3
+
+.is-fixed-top
+  position: fixed
+  left: 0
+  top: 0
+  width: 100vw
+  height: 200px
+  z-index: 100
+  background: white
+  border-bottom: 1.5px solid #eee
+
+.table.has-sticky-header thead th
+  top: 200px
+  
