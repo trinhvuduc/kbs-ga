@@ -31,6 +31,11 @@ public class Population {
         return individuals.get(index);
     }
 
+    @JsonIgnore
+    public Individual getEliteIndividual() {
+        return getIndividualByIndex(0);
+    }
+
     public void setIndividual(int populationIndex, Individual individual) {
         this.individuals.add(populationIndex, individual);
     }
