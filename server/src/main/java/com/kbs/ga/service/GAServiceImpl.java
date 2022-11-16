@@ -49,32 +49,19 @@ public class GAServiceImpl implements GAService {
             generations.add(population);
             generation++;
         }
-        Individual eliteIndividual = population.getEliteIndividual();
-
+        Individual fittest = population.getEliteIndividual();
+        System.out.println();
         System.out.println("Found solution in " + generation + " generations");
-        System.out.println("Best solution: " + eliteIndividual.getFitness());
-
-        System.out.println(eliteIndividual.getFitness());
-        System.out.println("Best solution: " + eliteIndividual.toString());
+        System.out.println("Best solution: " + fittest.getFitness());
+        System.out.println("Best solution: " + fittest);
         System.out.println();
         System.out.println("#######################");
         System.out.println("English Premier League Schedule");
         System.out.println("#######################");
         System.out.println();
-        database.createSeasonSchedule(eliteIndividual, database);
-        List<MatchRound> seasonSchedule = database.getSeasonSchedule();
-        for (MatchRound matchSchedule : seasonSchedule) {
-            int matchDayNumber = seasonSchedule.indexOf(matchSchedule) + 1;
-            System.out.println("MatchRound: " + matchDayNumber);
-            for (Match match : matchSchedule.getMatches()) {
-                Team[] match1 = match.getMatch();
-                int matchNumber = matchSchedule.getMatches().indexOf(match) + 1;
-                Team teamA = match1[0];
-                Team teamB = match1[1];
-                System.out.println("Match " + matchNumber + ": " + teamA.getName() + " (H)" + " Vs " + teamB.getName() + " (A)");
 
-            }
-        }
+        fittest.createMatchRounds(database);
+        fittest.displaySchedule();
 
 //        /* Save file */
 //        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

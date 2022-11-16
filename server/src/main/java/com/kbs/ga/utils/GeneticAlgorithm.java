@@ -38,8 +38,6 @@ public class GeneticAlgorithm {
     }
 
     public Population crossoverPopulation(Population population) {
-//        population.calculateFitness();
-//        population.sortBasedOnFitness();
         // Create new population
         Population newPopulation = new Population();
         // Loop over current population by fitness
@@ -61,12 +59,9 @@ public class GeneticAlgorithm {
                     }
                 }
                 // Add offspring to new population
-//                offspring.calculateFitness();
-//                offspring.createMatchRounds(database);
                 newPopulation.setIndividual(populationIndex, offspring);
             } else {
                 // Add individual to new population without applying crossover
-//                parent1.createMatchRounds(database);
                 newPopulation.setIndividual(populationIndex, parent1);
             }
         }
@@ -94,7 +89,6 @@ public class GeneticAlgorithm {
                 }
             }
             // Add individual to population
-//            individual.createMatchRounds(database);
             newPopulation.setIndividual(populationIndex, individual);
         }
         // Return mutated population
@@ -102,7 +96,6 @@ public class GeneticAlgorithm {
     }
 
     public void evalPopulation(Population population, Database database) {
-        //double populationFitness = 0;
         double populationFitness = population.getIndividuals().stream()
                 .mapToDouble(x -> calculateFitness(x, database))
                 .sum();
@@ -112,10 +105,8 @@ public class GeneticAlgorithm {
     }
 
     public double calculateFitness(Individual individual, Database database) {
-        // Create new database object to use -- cloned from an existing database
-        Database threadDatabase = new Database(database);
-        threadDatabase.createSeasonSchedule(individual, database);
-        int clashes = threadDatabase.calculateConflicts();
+        individual.createMatchRounds(database);
+        int clashes = individual.calculateConflicts();
         double fitness = 1 / (double) (clashes + 1);
         individual.setFitness(fitness);
         return fitness;

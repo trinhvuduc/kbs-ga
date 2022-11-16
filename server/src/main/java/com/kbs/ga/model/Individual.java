@@ -197,6 +197,22 @@ public class Individual {
         return conflicts;
     }
 
+    public void displaySchedule() {
+        List<MatchRound> seasonSchedule = getMatchRounds();
+        for (MatchRound matchSchedule : seasonSchedule) {
+            int matchDayNumber = seasonSchedule.indexOf(matchSchedule) + 1;
+            System.out.println("Round: " + matchDayNumber);
+            for (Match match : matchSchedule.getMatches()) {
+                Team[] match1 = match.getMatch();
+                int matchNumber = matchSchedule.getMatches().indexOf(match) + 1;
+                Team teamA = match1[0];
+                Team teamB = match1[1];
+                System.out.println("Match " + matchNumber + ": " + teamA.getName() + " (H)" + " Vs " + teamB.getName() + " (A)");
+            }
+            System.out.println();
+        }
+    }
+
     public String toString() {
         String output = "";
         for (int gene = 0; gene < this.chromosome.length; gene++) {
