@@ -113,20 +113,17 @@ public class Individual {
 
     public void createMatchRounds(Database database) {
         int numberOfTeams = database.getNumberOfTeams();
-        int matchesPlayedByEachTeam = (numberOfTeams - 1) * 2;
-
-        // Create chromosome
-//        int chromosomeLength = matchesPlayedByEachTeam * numberOfTeams;
-//        this.chromosome = new int[chromosomeLength];
-//        for (int i = 0; i < chromosomeLength; i++) {
-//            Team team = database.getRandomTeam();
-//            this.chromosome[i] = team.getId();
-//        }
+        int totalRounds = 0;
+        if (numberOfTeams % 2 == 0) {
+            totalRounds = (numberOfTeams - 1) * 2;
+        } else {
+            totalRounds = numberOfTeams * 2;
+        }
 
         // Create match round
         int chromosomePos = 0;
         List<MatchRound> rounds = new ArrayList<>();
-        for (int i = 0; i < matchesPlayedByEachTeam; i++) {
+        for (int i = 0; i < totalRounds; i++) {
             MatchRound matchRound = new MatchRound();
             for (int j = 0; j < numberOfTeams / 2; j++) {
                 int id1 = chromosome[chromosomePos++];
@@ -165,9 +162,9 @@ public class Individual {
                 .filter(x -> x.intValue() > 1)
                 .mapToInt(x -> x.intValue())
                 .sum();
-        if (numberOfTimeSameMatchBeingPlayed != 0) {
-            numberOfTimeSameMatchBeingPlayed = numberOfTimeSameMatchBeingPlayed / 2;
-        }
+//        if (numberOfTimeSameMatchBeingPlayed != 0) {
+//            numberOfTimeSameMatchBeingPlayed = numberOfTimeSameMatchBeingPlayed / 2;
+//        }
 
         // Calculate the number of times one team is playing matches on the same day.
         for (MatchRound matchSchedule : seasonSchedule) {
@@ -181,17 +178,17 @@ public class Individual {
                     .filter(x -> x.intValue() > 1)
                     .mapToInt(x -> x.intValue())
                     .sum();
-            if (sum != 0) {
-                sum = sum / 2;
-            }
+//            if (sum != 0) {
+//                sum = sum / 2;
+//            }
             teamsPlayingMultipleMatchesSameDay = teamsPlayingMultipleMatchesSameDay + sum;
         }
 
         // Calculate the number of times team is playing against each other.
-//        long teamsPlayingAgainstEachOtherLong = allMatches.stream()
-//                .filter(x -> x.getMatch()[0] == x.getMatch()[1])
-//                .count();
-//        teamsPlayingAgainstEachOther = (int) teamsPlayingAgainstEachOtherLong;
+        long teamsPlayingAgainstEachOtherLong = allMatches.stream()
+                .filter(x -> x.getMatch()[0] == x.getMatch()[1])
+                .count();
+        teamsPlayingAgainstEachOther = (int) teamsPlayingAgainstEachOtherLong;
 
         var conflicts = numberOfTimeSameMatchBeingPlayed + teamsPlayingMultipleMatchesSameDay + teamsPlayingAgainstEachOther;
         return conflicts;
