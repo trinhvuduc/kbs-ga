@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Header from '../components/header';
 import FloatingButton from '../components/floating-button';
-import { SCHEDULE } from '../utils/schedule';
 import { useRouter } from 'next/router';
 import { postData } from '../utils/request';
 import { extractData } from '../utils/storage';
