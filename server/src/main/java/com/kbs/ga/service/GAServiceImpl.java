@@ -63,6 +63,14 @@ public class GAServiceImpl implements GAService {
         fittest.createMatchRounds(database);
         fittest.displaySchedule();
 
+        List<Population> result = new ArrayList<>();
+        for (Population pop: generations) {
+            Individual elite = pop.getEliteIndividual();
+            Population newPop = new Population();
+            newPop.setIndividuals(List.of(elite));
+            result.add(newPop);
+        }
+
 //        /* Save file */
 //        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 //        String json = ow.writeValueAsString(generations);
@@ -70,6 +78,7 @@ public class GAServiceImpl implements GAService {
 //        System.out.println(file.toPath());
 //        Files.writeString(file.toPath(), json.subSequence(0, json.length() - 1));
 
-        return generations;
+//        return generations;
+        return result;
     }
 }
