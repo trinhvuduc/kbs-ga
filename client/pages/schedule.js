@@ -16,7 +16,6 @@ export default function Schedule() {
   }
 
   useEffect(() => {
-    // setSchedules(SCHEDULE);
     if (!router.isReady) return;
     const chromosome = router.query['chromosome'].split(',');
     const teams = extractData('teams');
