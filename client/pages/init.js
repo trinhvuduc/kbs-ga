@@ -11,17 +11,9 @@ export default function Init() {
   const [individuals, setIndividuals] = useState([]);
 
   useEffect(() => {
-    if (!router.isReady) return;
-    const index = router.query['index'];
-    if (index) {
-      const generations = extractData('generations');
-      const population = generations[index - 1];
-      setIndividuals(population?.['individuals']);
-    } else {
-      const population = extractData('population');
-      setIndividuals(population?.['individuals']);
-    }
-  }, [router.isReady]);
+    const population = extractData('population');
+    setIndividuals(population?.['individuals']);
+  }, []);
 
   const onViewDetail = (chromosome) => {
     router.push(`/schedule?chromosome=${chromosome}`);

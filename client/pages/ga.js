@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Header from '../components/header';
 import FloatingButton from '../components/floating-button';
-import { GENERATIONS } from '../utils/const';
 import { extractData } from '../utils/storage';
 import { useRouter } from 'next/router';
 
@@ -12,12 +11,11 @@ export default function GA() {
 
   useEffect(() => {
     const _generations = extractData('generations');
-    // setGenerations(GENERATIONS);
     setGenerations(_generations);
   }, []);
 
-  const onViewDetail = (index) => {
-    router.push(`/init?index=${index}`);
+  const onViewDetail = (chromosome) => {
+    router.push(`/schedule?chromosome=${chromosome}`);
   }
 
   const onSubmit = () => {
@@ -52,7 +50,7 @@ export default function GA() {
                 <td>Thế hệ thứ {i + 1}</td>
                 <td>{chromosome}</td>
                 <td>{fitness}</td>
-                <td><a onClick={() => onViewDetail(i + 1)}>Xem chi tiết</a></td>
+                <td><a onClick={() => onViewDetail(chromosome)}>Xem chi tiết</a></td>
               </tr>)
             })}
           </tbody>
