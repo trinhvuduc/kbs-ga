@@ -38,7 +38,7 @@ public class GAServiceImpl implements GAService {
 
         while (ga.isTerminationConditionMet(population) == false) {
             // Print fittest genotype from population
-            System.out.println("Generation " + generation + " Best solution: " + population.getIndividualByIndex(0).getFitness());
+            System.out.println("Generation " + generation + " Best solution: " + population.getEliteIndividual().getFitness());
             // Apply crossover
             population = ga.crossoverPopulation(population);
             // Apply mutation
@@ -49,6 +49,7 @@ public class GAServiceImpl implements GAService {
             generations.add(population);
             generation++;
         }
+
         Individual fittest = population.getEliteIndividual();
         System.out.println();
         System.out.println("Found solution in " + generation + " generations");

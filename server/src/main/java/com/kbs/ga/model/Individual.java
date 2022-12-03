@@ -132,6 +132,7 @@ public class Individual {
                 Team team2 = database.getTeamById(id2);
                 Match match = new Match(team1, team2);
                 matchRound.addMatch(match);
+                matchRound.generateTime(i);
             }
             rounds.add(matchRound);
         }

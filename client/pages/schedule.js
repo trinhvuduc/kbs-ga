@@ -4,6 +4,7 @@ import FloatingButton from '../components/floating-button';
 import { useRouter } from 'next/router';
 import { postData } from '../utils/request';
 import { extractData } from '../utils/storage';
+import { displayTime, displayDate } from '../utils/datetime';
 
 export default function Schedule() {
   const router = useRouter();
@@ -37,6 +38,7 @@ export default function Schedule() {
         const match = matchRound[j];
         const homeTeam = match['homeTeam'];
         const awayTeam = match['awayTeam'];
+        var datetime = match['time'];
         const node = (
           <div className='column is-half has-text-centered' key={j}>
             <div className='box is-flex is-align-items-center is-justify-content-center' style={{height: '100%'}}>
@@ -45,8 +47,8 @@ export default function Schedule() {
                 <div className='is-size-6'>{homeTeam['name']}</div>
               </div>
               <div className='' style={{flex: '1 0 0'}}>
-                <p className='is-size-6'>19:00</p>
-                <p className='is-size-6'>13/11/2022</p>
+                <p className='is-size-6'>{displayTime(datetime)}</p>
+                <p className='is-size-6'>{displayDate(datetime)}</p>
               </div>
               <div className='' style={{flex: '1 0 0'}}>
                 <img src={awayTeam['logo']} />

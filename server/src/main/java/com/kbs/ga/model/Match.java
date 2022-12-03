@@ -2,10 +2,12 @@ package com.kbs.ga.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class Match {
     private Team[] match;
+    private LocalDateTime time;
 
     public Match(Team homeTeam, Team awayTeam) {
         this.match = new Team[2];
@@ -28,6 +30,14 @@ public class Match {
 
     public Team getAwayTeam() {
         return this.match[1];
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     @Override
