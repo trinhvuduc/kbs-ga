@@ -1,4 +1,14 @@
+import { useEffect } from "react";
+
 const ProgressBar = ({isActive}) => {
+  useEffect(() => {
+    if (isActive) {
+      document.documentElement.className = 'is-clipped';
+    } else {
+      document.documentElement.className = '';
+    }
+  }, [isActive]);
+
   return (
     <div className={`modal${isActive ? ' is-active' : ''}`}>
         <div className="modal-background"></div>
