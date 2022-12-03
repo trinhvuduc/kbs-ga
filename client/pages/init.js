@@ -4,11 +4,13 @@ import { extractData, storeData } from '../utils/storage';
 import FloatingButton from '../components/floating-button';
 import { useRouter } from 'next/router';
 import { postData } from '../utils/request';
+import ProgressBar from '../components/progress';
 
 export default function Init() {
   const router = useRouter();
 
   const [individuals, setIndividuals] = useState([]);
+  const [hasProgress, setProgess] = useState(false);
 
   useEffect(() => {
     const population = extractData('population');
@@ -26,8 +28,10 @@ export default function Init() {
       teams,
       population
     }
+    setProgess(true);
     const response = await postData(process.env.NEXT_PUBLIC_API + '/ga/exec', data);
     storeData('generations', response);
+    setProgess(false);
     router.push('/ga');
   }
 
@@ -62,6 +66,7 @@ export default function Init() {
         </table>
         </div>
       </section>
+      <ProgressBar isActive={hasProgress} />
       <FloatingButton title='Tiếp tục' onClick={onSubmit} />
     </>
   );

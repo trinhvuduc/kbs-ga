@@ -14,7 +14,7 @@ const Header = ({title}) => {
       <section className='is-fixed-top pt-3'>
         <div className='columns'>
           <div className='column has-text-centered'>
-            <a href='' className='is-clickable' onClick={toHomePage}>
+            <a href='/' className='is-clickable' onClick={toHomePage}>
               <img className="m-auto" src="/premier-league-logo.png" alt="next" />
             </a>
             <h1 className="title is-3 my-3">{title}</h1>

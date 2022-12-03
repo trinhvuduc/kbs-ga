@@ -5,11 +5,13 @@ import { getData, postData } from '../utils/request';
 import { clearStore, storeData } from '../utils/storage';
 import { toastError } from '../utils/toast';
 import FloatingButton from '../components/floating-button';
+import ProgressBar from '../components/progress';
 
 export default function Home() {
   const router = useRouter();
 
   const [teams, setTeams] = useState([])
+  const [hasProgress, setProgess] = useState(false);
 
   let data = Array(teams?.length).fill(null);
 
@@ -37,9 +39,11 @@ export default function Home() {
       toastError('Số đội không hợp lệ');
       return
     }
+    setProgess(true);
     const response = await postData(process.env.NEXT_PUBLIC_API + '/ga/init', _data);
     storeData('teams', _data);
     storeData('population', response);
+    setProgess(false);
     router.push('/init');
   }
 
@@ -83,6 +87,7 @@ export default function Home() {
       <section className='container' style={{margin: '210px 250px 0'}}>
         {body()}
       </section>
+      <ProgressBar isActive={hasProgress} />
       <FloatingButton title='Tiếp tục' onClick={onSubmit} />
     </>
   );
