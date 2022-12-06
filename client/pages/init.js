@@ -22,13 +22,13 @@ export default function Init() {
   }
 
   const onSubmit = async () => {
+    setProgess(true);
     const population = extractData('population');
     const teams = extractData('teams');
     const data = {
       teams,
       population
     }
-    setProgess(true);
     const response = await postData(process.env.NEXT_PUBLIC_API + '/ga/exec', data);
     storeData('generations', response);
     setProgess(false);
