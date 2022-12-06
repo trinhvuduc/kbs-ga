@@ -31,7 +31,7 @@ public class GAServiceImpl implements GAService {
         generations.add(population);
         int generation = 1;
 
-        while (ga.isTerminationConditionMet(population) == false) {
+        while (ga.isTerminationConditionMet(population) == false && generation < 5000) {
             System.out.println("Generation " + generation + " Best solution: " + population.getEliteIndividual().getFitness());
             // Apply crossover
             population = ga.crossoverPopulation(population);
