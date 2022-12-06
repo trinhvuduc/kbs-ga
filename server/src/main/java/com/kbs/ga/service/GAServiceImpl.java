@@ -1,15 +1,10 @@
 package com.kbs.ga.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.kbs.ga.model.*;
 import com.kbs.ga.utils.GeneticAlgorithm;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +32,6 @@ public class GAServiceImpl implements GAService {
         int generation = 1;
 
         while (ga.isTerminationConditionMet(population) == false) {
-            // Print fittest genotype from population
             System.out.println("Generation " + generation + " Best solution: " + population.getEliteIndividual().getFitness());
             // Apply crossover
             population = ga.crossoverPopulation(population);
@@ -45,7 +39,6 @@ public class GAServiceImpl implements GAService {
             population = ga.mutatePopulation(population, database);
             // Evaluate population
             ga.evalPopulation(population, database);
-            // Increment the current generation
             generations.add(population);
             generation++;
         }
@@ -72,14 +65,6 @@ public class GAServiceImpl implements GAService {
             result.add(newPop);
         }
 
-//        /* Save file */
-//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-//        String json = ow.writeValueAsString(generations);
-//        File file = new ClassPathResource("generations.json").getFile();
-//        System.out.println(file.toPath());
-//        Files.writeString(file.toPath(), json.subSequence(0, json.length() - 1));
-
-//        return generations;
         return result;
     }
 }

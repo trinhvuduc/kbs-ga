@@ -38,15 +38,6 @@ public class Individual {
         int numberOfTeams = database.getNumberOfTeams();
         int matchesPlayedByEachTeam = (numberOfTeams - 1) * 2;
 
-        /* Ex: numberOfTeams = 4
-         * Each team plays each other twice (Home and Away)
-         * Every team plays 6 matches.
-         * Chromosome Length is the number of matches played by each team
-         * In this case - 4 * 6 = 24
-         *
-         * */
-
-        // Create chromosome
         int chromosomeLength = matchesPlayedByEachTeam * numberOfTeams;
         this.chromosome = new int[chromosomeLength];
         for (int i = 0; i < chromosomeLength; i++) {
@@ -54,7 +45,6 @@ public class Individual {
             this.chromosome[i] = team.getId();
         }
 
-        // Create match round
         int chromosomePos = 0;
         List<MatchRound> rounds = new ArrayList<>();
         for (int i = 0; i < matchesPlayedByEachTeam; i++) {
@@ -147,13 +137,12 @@ public class Individual {
     }
 
     public int calculateConflicts() {
+        int teamsPlayingMatchesInRound = 0;
         int numberOfTimeSameMatchBeingPlayed = 0;
-        int teamsPlayingMultipleMatchesSameDay = 0;
-        int teamsPlayingAgainstEachOther = 0;
+        int teamsPlayingAgainstItSelf = 0;
 
         List<MatchRound> seasonSchedule = this.getMatchRounds();
 
-        // Calculate number of times same match being played
         List<Match> allMatches = seasonSchedule.stream()
                 .flatMap(x -> x.getMatches().stream())
                 .collect(Collectors.toList());
@@ -163,11 +152,7 @@ public class Individual {
                 .filter(x -> x.intValue() > 1)
                 .mapToInt(x -> x.intValue())
                 .sum();
-//        if (numberOfTimeSameMatchBeingPlayed != 0) {
-//            numberOfTimeSameMatchBeingPlayed = numberOfTimeSameMatchBeingPlayed / 2;
-//        }
 
-        // Calculate the number of times one team is playing matches on the same day.
         for (MatchRound matchSchedule : seasonSchedule) {
             Integer[] matchDayChromosome = matchSchedule.getMatches().stream()
                     .flatMap(x -> Stream.of(x.getMatch()))
@@ -179,19 +164,15 @@ public class Individual {
                     .filter(x -> x.intValue() > 1)
                     .mapToInt(x -> x.intValue())
                     .sum();
-//            if (sum != 0) {
-//                sum = sum / 2;
-//            }
-            teamsPlayingMultipleMatchesSameDay = teamsPlayingMultipleMatchesSameDay + sum;
+            teamsPlayingMatchesInRound = teamsPlayingMatchesInRound + sum;
         }
 
-        // Calculate the number of times team is playing against each other.
         long teamsPlayingAgainstEachOtherLong = allMatches.stream()
                 .filter(x -> x.getMatch()[0] == x.getMatch()[1])
                 .count();
-        teamsPlayingAgainstEachOther = (int) teamsPlayingAgainstEachOtherLong;
+        teamsPlayingAgainstItSelf = (int) teamsPlayingAgainstEachOtherLong;
 
-        var conflicts = numberOfTimeSameMatchBeingPlayed + teamsPlayingMultipleMatchesSameDay + teamsPlayingAgainstEachOther;
+        var conflicts = numberOfTimeSameMatchBeingPlayed + teamsPlayingMatchesInRound + teamsPlayingAgainstItSelf;
         return conflicts;
     }
 
